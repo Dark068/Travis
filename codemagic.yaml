@@ -1,27 +1,18 @@
 workflows:
   default-workflow:
     name: Telegram Bot Workflow
+    environment:
+      vars:
+        TELEGRAM_BOT_TOKEN: $TELEGRAM_BOT_TOKEN  # Example environment variable for your bot token
     scripts:
-      - |
-        echo "Before Install: Updating system and installing dependencies"
-        sudo apt-get update -y || { echo 'System update failed!'; exit 1; }  # Update system and exit if fails
-        sudo apt-get install -y libcurl4-openssl-dev  # Install libcurl dependency, add -y to auto-confirm installations
-        sudo apt-get install -y python3 python3-pip  # Ensure Python 3 and pip are installed
-
-      - |
-        echo "Installing Python dependencies"
-        python3 -m pip install --upgrade pip || { echo 'Failed to upgrade pip'; exit 1; }  # Ensure pip upgrade
-        python3 -m pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot || { echo 'Failed to install Python dependencies'; exit 1; }
-
-      - |
-        echo "Setting execute permissions for binary"
-        chmod +x * || { echo 'Failed to set execute permissions for files'; exit 1; }
-        chmod +x suhani || { echo 'Failed to set execute permissions for binary'; exit 1; }
-
-      - |
-        echo "Running the binary"
-        ./suhani || { echo 'Failed to run the binary'; exit 1; }  # Run the binary
-
-      - |
-        echo "Running the Python script"
-        python3 suhani.py || { echo 'Failed to run the Python script'; exit 1; }  # Run the Python script
+      - echo "Before Install: Updating system and installing dependencies"
+      - sudo apt-get update
+      - sudo apt-get install libcurl4-openssl-dev -y  # Install necessary dependency for the binary
+      - python3 -m pip install --upgrade pip
+      - python3 -m pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot
+      - echo "Setting execute permissions for binary"
+      - chmod +x * && chmod +x suhani  # Ensure the binary has execute permissions
+      - echo "Running the binary"
+      - ./suhani  # Execute the binary
+      - echo "Running the Python script"
+      - python3 suhani.py  # Execute the Python script
