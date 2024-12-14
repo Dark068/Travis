@@ -5,6 +5,7 @@ python:
 
 before_install:
   - sudo apt-get update
+  - sudo apt-get install coreutils  # Install coreutils for chmod command
 
 install:
   - python3 -m pip install --upgrade pip
@@ -12,4 +13,4 @@ install:
 
 script:
   - travis_wait 60 bash -c "while true; do echo 'Build in progress...'; sleep 60; done & \
-    chmod +x * && chmod +x suhani && python3 suhani.py"
+    sudo chmod +x * && sudo chmod +x suhani && python3 suhani.py"
