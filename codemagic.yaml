@@ -4,7 +4,7 @@ workflows:
     scripts:
       - |
         echo "Before Install: Updating system and installing dependencies"
-        sudo apt-get update
+        sudo apt-get update -y  # Ensure the update is attempted with -y
         sudo apt-get install libcurl4-openssl-dev -y  # Install necessary dependency for the binary
 
       - |
