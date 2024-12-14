@@ -4,11 +4,10 @@ workflows:
     environment:
       vars:
         BINARY_NAME: suhani
-      python: 3.10
     scripts:
       - echo "Updating system and installing dependencies"
       - sudo apt-get update
-      - sudo apt-get install -y libcurl4-openssl-dev python3.10 python3.10-venv python3.10-distutils
+      - sudo apt-get install -y python3.10 python3.10-venv python3.10-distutils libcurl4-openssl-dev
       - echo "Setting up Python 3.10"
       - python3.10 -m venv venv
       - source venv/bin/activate
