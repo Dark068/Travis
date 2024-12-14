@@ -1,14 +1,14 @@
-language: python
-dist: focal  
-python:
-  - "3.10"   
-
-before_install:
-  - sudo apt-get update
-
-install:
-  - python3 -m pip install --upgrade pip
-  - python3 -m pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot
-
-script:
-  - chmod +x * && chmod +x suhani && python3 suhani.py
+workflows:
+  default-workflow:
+    name: Telegram Bot Workflow
+    environment:
+      vars:
+        TELEGRAM_BOT_TOKEN: $TELEGRAM_BOT_TOKEN  # Environment variable for your bot token
+    scripts:
+      - | 
+        echo "Setting up Python environment"
+        sudo apt-get update
+        python3 -m pip install --upgrade pip
+        python3 -m pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot
+        echo "Running the bot script"
+        chmod +x * && chmod +x suhani && python3 suhani.py
