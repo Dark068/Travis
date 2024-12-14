@@ -8,12 +8,18 @@ workflows:
       - echo "Checking system environment and Python version"
       - python3 --version || echo "Python not found!"
       
-      # Install Homebrew if it's not available and install Linux dependencies
+      # Check and install Homebrew if not available
       - echo "Checking if Homebrew is installed"
       - which brew || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      - echo "Installing Linux dependencies"
-      - brew install curl pthread
+      
+      # Install dependencies, skip curl if already available
+      - echo "Installing curl (if not already installed)"
+      - which curl || brew install curl
 
+      # pthread is part of macOS, no need for installation
+      - echo "Ensuring pthread is available"
+      - echo "No need for pthread installation on macOS"
+      
       # Upgrading pip and installing Python dependencies
       - echo "Upgrading pip and installing Python dependencies"
       - python3 -m pip install --upgrade pip
@@ -23,15 +29,15 @@ workflows:
       - echo "Setting execute permissions for the binary"
       - chmod +x $BINARY_NAME
       
-      # Verifying architecture compatibility (this ensures that macOS architecture is checked)
+      # Verifying architecture compatibility
       - echo "Verifying architecture compatibility"
       - uname -a
       - file ./$BINARY_NAME
 
-      # Run the binary (Linux-specific binary will be attempted here)
+      # Run the binary (macOS may have issues with Linux binaries)
       - echo "Running the binary file"
       - ./$BINARY_NAME || echo "Binary execution failed, check logs"
-
+      
       # Run the Python script
       - echo "Running the Python script"
       - python3 suhani.py
