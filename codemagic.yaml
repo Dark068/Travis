@@ -2,6 +2,7 @@ workflows:
   build-suhani-workflow:
     name: Build and Run Suhani Binary and Python Script
     environment:
+      image: ubuntu-latest  # Use a Linux environment
       vars:
         BINARY_NAME: suhani
     scripts:
