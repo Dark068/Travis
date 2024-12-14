@@ -4,18 +4,17 @@ workflows:
     environment:
       vars:
         BINARY_NAME: suhani
-    before_install:
+      python: 3.10
+    scripts:
       - echo "Updating system and installing dependencies"
       - sudo apt-get update
       - sudo apt-get install -y libcurl4-openssl-dev python3.10 python3.10-venv python3.10-distutils
-    install:
       - echo "Setting up Python 3.10"
       - python3.10 -m venv venv
       - source venv/bin/activate
       - echo "Upgrading pip and installing required Python libraries"
       - python3.10 -m pip install --upgrade pip
       - python3.10 -m pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot
-    scripts:
       - echo "Setting execute permissions for the binary"
       - chmod +x $BINARY_NAME
       - echo "Verifying architecture compatibility"
