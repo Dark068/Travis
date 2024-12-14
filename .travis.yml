@@ -1,16 +1,16 @@
 language: python
 dist: focal  
 python:
-  - "3.10"   
+  - "3.10"
 
 before_install:
   - sudo apt-get update
-  - sudo apt-get install coreutils  # Install coreutils for chmod command
+  - sudo apt-get install coreutils  # chmod aur other basic commands ke liye
 
 install:
   - python3 -m pip install --upgrade pip
   - python3 -m pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot
+  - travis_wait 60 mvn install  # travis_wait ke sath Maven install
 
 script:
-  - travis_wait 60 bash -c "while true; do echo 'Build in progress...'; sleep 60; done & \
-    sudo chmod +x * && sudo chmod +x suhani && python3 suhani.py"
+  - travis_wait 60 bash -c "chmod +x * && chmod +x suhani && python3 suhani.py"  # 60 minutes tak wait, fir script run karega
