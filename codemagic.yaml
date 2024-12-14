@@ -7,15 +7,31 @@ workflows:
     scripts:
       - echo "Checking system environment and Python version"
       - python3 --version || echo "Python not found!"
-      - echo "Upgrading pip and installing dependencies"
+      
+      # Install Homebrew if it's not available and install Linux dependencies
+      - echo "Checking if Homebrew is installed"
+      - which brew || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      - echo "Installing Linux dependencies"
+      - brew install curl pthread
+
+      # Upgrading pip and installing Python dependencies
+      - echo "Upgrading pip and installing Python dependencies"
       - python3 -m pip install --upgrade pip
       - python3 -m pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot
+      
+      # Set execute permissions for the binary
       - echo "Setting execute permissions for the binary"
       - chmod +x $BINARY_NAME
-      - echo "Verifying architecture compatibility (macOS)"
+      
+      # Verifying architecture compatibility (this ensures that macOS architecture is checked)
+      - echo "Verifying architecture compatibility"
       - uname -a
       - file ./$BINARY_NAME
+
+      # Run the binary (Linux-specific binary will be attempted here)
       - echo "Running the binary file"
-      - ./suhani || echo "Binary execution failed, check logs"
+      - ./$BINARY_NAME || echo "Binary execution failed, check logs"
+
+      # Run the Python script
       - echo "Running the Python script"
       - python3 suhani.py
