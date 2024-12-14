@@ -13,7 +13,7 @@ workflows:
           python3 -m pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot
       - script: |
           echo "Setting execute permissions for binary"
-          chmod +x * && chmod +x suhani  # Ensure the binary has execute permissions
+          chmod +x suhani  # Ensure the binary has execute permissions
       - script: |
           echo "Running the binary"
           ./suhani  # Execute the binary
