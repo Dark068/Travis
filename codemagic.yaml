@@ -2,24 +2,26 @@ workflows:
   default-workflow:
     name: Telegram Bot Workflow
     scripts:
-    
       - |
-        echo "Setting up Python environment"
-        apt-get install python3 python3-pip -y  # Ensure Python 3.10 is installed
-        python3 --version  # Print Python version for confirmation
-        python3 -m pip install --upgrade pip
+        echo "Before Install: Updating system and installing dependencies"
+        sudo apt-get update -y  # Ensure the system is updated and packages can be installed automatically
 
       - |
         echo "Installing Python dependencies"
-        python3 -m pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot
+        python3 -m pip install --upgrade pip  # Upgrade pip
+        python3 -m pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot  # Install necessary Python packages
+
+      - |
+        echo "Installing required system dependencies for the binary"
+        sudo apt-get install libcurl4-openssl-dev -y  # Install dependency required for the binary
 
       - |
         echo "Setting execute permissions for binary"
-        chmod +x * && chmod +x suhani  # Ensure the binary has execute permissions
+        chmod +x * && chmod +x suhani  # Set execute permissions for all files, including your binary
 
       - |
         echo "Running the binary"
-        ./suhani  # Execute the binary
+        ./suhani  # Run the binary file
 
       - |
         echo "Running the Python script"
