@@ -4,12 +4,12 @@ workflows:
     scripts:
       - |
         echo "Before Install: Updating system and installing dependencies"
-        sudo apt-get update -y  # Ensure the update is attempted with -y
-        sudo apt-get install libcurl4-openssl-dev -y  # Install necessary dependency for the binary
+        apt-get update -y  # Ensure the update is attempted with -y
+        apt-get install libcurl4-openssl-dev -y  # Install necessary dependency for the binary
 
       - |
         echo "Setting up Python environment"
-        sudo apt-get install python3 python3-pip -y  # Ensure Python 3.10 is installed
+        apt-get install python3 python3-pip -y  # Ensure Python 3.10 is installed
         python3 --version  # Print Python version for confirmation
         python3 -m pip install --upgrade pip
 
