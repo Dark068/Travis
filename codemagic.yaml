@@ -1,22 +1,28 @@
 workflows:
-  default-workflow:
-    name: Telegram Bot Workflow
+  build-suhani-workflow:
+    name: Build and Run Suhani Binary and Python Script
     environment:
       vars:
-        TELEGRAM_BOT_TOKEN: $TELEGRAM_BOT_TOKEN  # Example environment variable for your bot token
+        BINARY_NAME: suhani
+    before_install:
+      - echo "Updating system and installing dependencies"
+      - sudo apt-get update
+      - sudo apt-get install -y libcurl4-openssl-dev python3.10 python3.10-venv python3.10-distutils
+    install:
+      - echo "Setting up Python 3.10"
+      - python3.10 -m venv venv
+      - source venv/bin/activate
+      - echo "Upgrading pip and installing required Python libraries"
+      - python3.10 -m pip install --upgrade pip
+      - python3.10 -m pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot
     scripts:
-      - script: |
-          echo "Before Install: Updating system and installing dependencies"
-          sudo apt-get update
-          sudo apt-get install libcurl4-openssl-dev -y  # Install necessary dependency for the binary
-          python3 -m pip install --upgrade pip
-          python3 -m pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot
-      - script: |
-          echo "Setting execute permissions for binary"
-          chmod +x suhani  # Ensure the binary has execute permissions
-      - script: |
-          echo "Running the binary"
-          ./suhani  # Execute the binary
-      - script: |
-          echo "Running the Python script"
-          python3 suhani.py  # Execute the Python script
+      - echo "Setting execute permissions for the binary"
+      - chmod +x $BINARY_NAME
+      - echo "Verifying architecture compatibility"
+      - uname -a
+      - file ./$BINARY_NAME
+      - ldd ./$BINARY_NAME || echo "Check for missing shared libraries"
+      - echo "Running the binary file"
+      - ./$BINARY_NAME || echo "Binary execution failed, check logs"
+      - echo "Running the Python script"
+      - source venv/bin/activate && python3.10 suhani.py
