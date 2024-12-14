@@ -2,11 +2,7 @@ workflows:
   default-workflow:
     name: Telegram Bot Workflow
     scripts:
-      - |
-        echo "Before Install: Updating system and installing dependencies"
-        apt-get update -y  # Ensure the update is attempted with -y
-        apt-get install libcurl4-openssl-dev -y  # Install necessary dependency for the binary
-
+    
       - |
         echo "Setting up Python environment"
         apt-get install python3 python3-pip -y  # Ensure Python 3.10 is installed
