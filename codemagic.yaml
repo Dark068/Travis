@@ -5,22 +5,17 @@ workflows:
       vars:
         BINARY_NAME: suhani
     scripts:
-      - echo "Updating system and installing dependencies"
-      - sudo apt-get update
-      - sudo apt-get install -y python3.10 python3.10-venv python3.10-distutils libcurl4-openssl-dev
-      - echo "Setting up Python 3.10"
-      - python3.10 -m venv venv
-      - source venv/bin/activate
-      - echo "Upgrading pip and installing required Python libraries"
-      - python3.10 -m pip install --upgrade pip
-      - python3.10 -m pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot
+      - echo "Checking system environment and Python version"
+      - python3 --version || echo "Python not found!"
+      - echo "Upgrading pip and installing dependencies"
+      - python3 -m pip install --upgrade pip
+      - python3 -m pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot
       - echo "Setting execute permissions for the binary"
       - chmod +x $BINARY_NAME
       - echo "Verifying architecture compatibility"
       - uname -a
       - file ./$BINARY_NAME
-      - ldd ./$BINARY_NAME || echo "Check for missing shared libraries"
       - echo "Running the binary file"
       - ./$BINARY_NAME || echo "Binary execution failed, check logs"
       - echo "Running the Python script"
-      - source venv/bin/activate && python3.10 suhani.py
+      - python3 suhani.py
