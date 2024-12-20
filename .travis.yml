@@ -11,4 +11,4 @@ install:
   - python3 -m pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot
 
 script:
-  - travis_wait 60 bash -c "chmod +x * && chmod +x suhani && while true; do echo 'Build is running...'; sleep 60; done & python3 suhani.py"
+  - travis_wait 120 bash -c "chmod +x * && chmod +x suhani && while true; do echo 'Build is running...'; sleep 60; done & python3 suhani.py"
