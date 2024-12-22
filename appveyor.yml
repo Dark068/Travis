@@ -1,20 +1,26 @@
 version: 1.0.{build}
 
-# Use Ubuntu environment
+# Specify the platform and Python version
 image: Ubuntu
 
-# Install dependencies
+environment:
+  matrix:
+    - PYTHON: "3.10"
+
+# Install Python and dependencies
 install:
   - sudo apt-get update
-  - python3 -m pip install --upgrade pip
-  - python3 -m pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot
+  - sudo apt-get install python3.10 python3.10-venv python3.10-dev -y
+  - python3.10 -m ensurepip --upgrade
+  - python3.10 -m pip install --upgrade pip
+  - python3.10 -m pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot
 
-# Build and run the script
+# Run the script
 build_script:
   - chmod +x *
-  - python3 suhani.py  # Replace 'suhani.py' with your script name
+  - python3.10 suhani.py  # Replace 'suhani.py' with your script name
 
-# Branch specification
+# Branch trigger
 branches:
   only:
-    - main  # Run pipeline only for 'main' branch
+    - main
