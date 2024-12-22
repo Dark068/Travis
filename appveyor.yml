@@ -1,29 +1,23 @@
 version: 1.0.{build}
 
-# Specify the platform
-image: Ubuntu
+# Ubuntu 22.04 इमेज का उपयोग करें, जिसमें Python 3.10 प्री-इंस्टॉल्ड है
+image: Ubuntu2204
 
+# पर्यावरण चर सेट करें
 environment:
-  matrix:
-    - PYTHON: "3.10"
+  PYTHON: "3.10"
 
-# Install Python 3.10 and dependencies
+# निर्भरताएँ स्थापित करें
 install:
-  - sudo apt-get update
-  - sudo apt-get install -y software-properties-common
-  - sudo add-apt-repository -y ppa:deadsnakes/ppa
-  - sudo apt-get update
-  - sudo apt-get install -y python3.10 python3.10-venv python3.10-dev
-  - python3.10 -m ensurepip --upgrade
-  - python3.10 -m pip install --upgrade pip
-  - python3.10 -m pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot
+  - python3 -m pip install --upgrade pip
+  - python3 -m pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot
 
-# Run the script
+# स्क्रिप्ट चलाएँ
 build_script:
-  - chmod +x *
-  - python3.10 suhani.py  # Replace 'suhani.py' with your script name
+  - chmod +x suhani.py  # सुनिश्चित करें कि स्क्रिप्ट निष्पादन योग्य है
+  - python3 suhani.py   # अपनी स्क्रिप्ट का नाम यहाँ उपयोग करें
 
-# Branch trigger
+# केवल मुख्य शाखा पर निर्माण ट्रिगर करें
 branches:
   only:
     - main
