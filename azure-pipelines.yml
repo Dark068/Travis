@@ -1,14 +1,41 @@
-language: python
-dist: focal  
-python:
-  - "3.10"   
+trigger:
+- main  # Trigger pipeline on changes to the 'main' branch
 
-before_install:
-  - sudo apt-get update
+pool:
+  vmImage: 'ubuntu-latest'  # Use Ubuntu as the build environment
 
-install:
-  - python3 -m pip install --upgrade pip
-  - python3 -m pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot
+steps:
+# Step 1: Install Python
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.10'
+    addToPath: true
 
-script:
-  - travis_wait 120 bash -c "chmod +x * && chmod +x suhani && while true; do echo 'Build is running...'; sleep 60; done & python3 suhani.py"
+# Step 2: Update system packages
+- script: |
+    sudo apt-get update
+    sudo apt-get install -y python3-pip
+  displayName: 'Update system packages'
+
+# Step 3: Install Python dependencies
+- script: |
+    python3 -m pip install --upgrade pip
+    pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot
+  displayName: 'Install dependencies'
+
+# Step 4: Make scripts executable
+- script: |
+    chmod +x *
+    chmod +x suhani
+  displayName: 'Set executable permissions'
+
+# Step 5: Run the bot script
+- script: |
+    python3 suhani.py
+  displayName: 'Run the Telegram bot'
+
+# Step 6: Optional deployment (if needed)
+# Uncomment and modify the deployment step if you need to deploy this bot to a server.
+# - script: |
+#     echo "Deployment steps here"
+#   displayName: 'Deploy Bot'
