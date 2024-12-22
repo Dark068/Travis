@@ -1,28 +1,18 @@
 version: 1.0.{build}
 
-# Platform setup
-image: Ubuntu  # Use Ubuntu environment
-
-# Specify Python version
-environment:
-  PYTHON: "3.10"
-
-init:
-  - echo "Using Python version: $PYTHON"
-
-# Before installing dependencies
-before_install:
-  - apt-get update
+# Use Ubuntu environment
+image: Ubuntu
 
 # Install dependencies
 install:
+  - sudo apt-get update
   - python3 -m pip install --upgrade pip
   - python3 -m pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot
 
-# Run the script
+# Build and run the script
 build_script:
   - chmod +x *
-  - python3 suhani.py  # Replace 'suhani.py' with your actual script
+  - python3 suhani.py  # Replace 'suhani.py' with your script name
 
 # Branch specification
 branches:
