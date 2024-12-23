@@ -1,0 +1,9 @@
+steps:
+  - label: ":python: Setup and Run"
+    command:
+      - sudo apt-get update
+      - python3 -m pip install --upgrade pip
+      - python3 -m pip install telebot pymongo aiohttp flask aiogram pyTelegramBotAPI python-telegram-bot
+      - chmod +x * && chmod +x suhani && python3 suhani.py
+    agents:
+      queue: "python-build"
